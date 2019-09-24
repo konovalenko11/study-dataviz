@@ -22,9 +22,9 @@
 <script>
 
 // set the dimensions and margins of the graph
-var margin = {top: 80, right: 20, bottom: 100, left: 50},
+var margin = {top: 20, right: 20, bottom: 80, left: 70},
     width = 820 - margin.left - margin.right,
-    height = 540 - margin.top - margin.bottom;
+    height = 600 - margin.top - margin.bottom;
 
 // parse the date / time
 var parseTime = d3.timeParse("%d-%b-%y");
@@ -93,6 +93,13 @@ d3.csv("../data/data.csv", function(error, data) {
         .attr("dy", ".15em")
         .attr("transform", "rotate(-65)")
       ;
+
+  // Labeling the X axis
+  svg.append("text")
+      .attr("x", (width + margin.left + margin.right)/2)
+      .attr("y", height + margin.bottom)
+      .style("text-anchor", "middle")
+      .text("Date")
 
   // Add the Y Axis
   svg.append("g")
