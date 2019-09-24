@@ -22,7 +22,7 @@
 <script>
 
 // set the dimensions and margins of the graph
-var margin = {top: 80, right: 20, bottom: 80, left: 50},
+var margin = {top: 80, right: 20, bottom: 100, left: 50},
     width = 820 - margin.left - margin.right,
     height = 540 - margin.top - margin.bottom;
 
@@ -83,11 +83,14 @@ d3.csv("../data/data.csv", function(error, data) {
           .ticks(d3.timeWeek.every(1))
           // .ticks(d3.timeMonth.every(1))
           // .ticks(d3.timeDay.every(20))
+          .tickFormat(d3.timeFormat("%Y-%m-%d"))
 
       )
       .selectAll("text")
-        // .style("text-anchor", "end")
-        .style("text-anchor", "start")
+        .style("text-anchor", "end")
+        // .style("text-anchor", "start")
+        .attr("dx", "-.8em")
+        .attr("dy", ".15em")
         .attr("transform", "rotate(-65)")
       ;
 
