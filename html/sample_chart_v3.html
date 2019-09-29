@@ -40,7 +40,7 @@ var y = d3.scaleLinear().range([height, 0]);
 // define the area
 var area = d3.area()
     .x(function(d) { return x(d.date); })
-    .y0(height) // constant area
+    .y0(0) // constant area
     // .y0(function(d) { return y(d.close-50); }) // fill the 50px area
     .y1(function(d) { return y(d.close); });
 
