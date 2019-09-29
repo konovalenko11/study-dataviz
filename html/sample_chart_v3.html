@@ -16,14 +16,15 @@
   font: bold 10px sans-serif;
 }
 
-text.shadow {
+.shadow {
   stroke: red;
   stroke-width: 4px;
   opacity: 0.2;
 }
 
-.text{
+.text {
   color: black;
+  text-shadow: 0 0 5px rgba(0, 128, 0, 1);
 }
 
 </style>
@@ -145,6 +146,7 @@ d3.csv("../data/data.csv", function(error, data) {
       .attr("x", (width + margin.left + margin.right)/2)
       .attr("y", height + margin.bottom)
       .style("text-anchor", "middle")
+      .attr("class", "text")
       .text("Date")
 
   // Add the Y Axis
@@ -158,6 +160,7 @@ d3.csv("../data/data.csv", function(error, data) {
     .attr("x",0 - (height / 2))
     .attr("dy", "1em")
     .style("text-anchor", "middle")
+    .attr("class", "text")
     .text("Value");
 
   // Add the scatterplot
