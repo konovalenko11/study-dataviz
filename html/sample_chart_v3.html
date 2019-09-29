@@ -22,7 +22,7 @@
 <script>
 
 // set the dimensions and margins of the graph
-var margin = {top: 20, right: 20, bottom: 80, left: 70},
+var margin = {top: 40, right: 20, bottom: 80, left: 70},
     width = 820 - margin.left - margin.right,
     height = 600 - margin.top - margin.bottom;
 
@@ -69,6 +69,7 @@ d3.csv("../data/data.csv", function(error, data) {
   svg.append("path")
       .data([data])
       .attr("class", "line")
+      .style("stroke-dasharray", ("2, 2")) // makes line dashed
       .attr("d", valueline);
 
   // Add the X Axis
@@ -93,6 +94,14 @@ d3.csv("../data/data.csv", function(error, data) {
         .attr("dy", ".15em")
         .attr("transform", "rotate(-65)")
       ;
+// add a title
+  svg.append("text")
+      .attr("x", (width / 2))
+      .attr("y", 0 - (margin.top / 2))
+      .attr("text-anchor", "middle")
+      .style("font-size", "20px")
+      .style("text-decoration", "underline")
+      .text("Value vs Date Graph");
 
   // Labeling the X axis
   svg.append("text")
@@ -105,6 +114,22 @@ d3.csv("../data/data.csv", function(error, data) {
   svg.append("g")
       .attr("class", "axis")
       .call(d3.axisLeft(y));
+
+  svg.append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("y", 0 - margin.left)
+    .attr("x",0 - (height / 2))
+    .attr("dy", "1em")
+    .style("text-anchor", "middle")
+    .text("Value");
+
+  // Add the scatterplot
+  svg.selectAll("dot")
+      .data(data)
+    .enter().append("circle")
+      .attr("r", 5)
+      .attr("cx", function(d) { return x(d.date); }) 
+      .attr("cy", function(d) { return y(d.close); });
 
 });
 
