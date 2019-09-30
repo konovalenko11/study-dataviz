@@ -66,10 +66,15 @@ var area = d3.area()
     // .y0(function(d) { return y(d.close-50); }) // fill the 50px area
     .y1(function(d) { return y(d.close); });
 
-// define the line
+// define the line (1)
 var valueline = d3.line()
     .x(function(d) { return x(d.date); })
     .y(function(d) { return y(d.close); });
+
+// define the line (2)
+var valueline2 = d3.line()
+    .x(function(d) { return x(d.date); })
+    .y(function(d) { return y(d.open); });
 
 // append the svg obgect to the body of the page
 // appends a 'group' element to 'svg'
@@ -95,18 +100,19 @@ function make_y_gridlines() {
 };
 
 // Get the data
-d3.csv("../data/data.csv", function(error, data) {
+d3.csv("../data/data4.csv", function(error, data) {
   if (error) throw error;
 
   // format the data
   data.forEach(function(d) {
       d.date = parseTime(d.date);
       d.close = +d.close;
+      d.open = (+d.open) * 12;
   });
 
   // Scale the range of the data
   x.domain(d3.extent(data, function(d) { return d.date; }));
-  y.domain([0, d3.max(data, function(d) { return d.close; })]);
+  y.domain([0, d3.max(data, function(d) { return Math.max(d.close, d.open); })]);
   // y.domain(d3.extent(data, function(d) { return d.close; }));
 
   // add the X gridlines
@@ -132,12 +138,19 @@ d3.csv("../data/data.csv", function(error, data) {
       .attr("class", "area")
       .attr("d", area);
 
-  // Add the valueline path. It draws after and places on top of the area.
+  // Add the valueline path (1). It draws after and places on top of the area.
   svg.append("path")
       .data([data])
       .attr("class", "line")
       .style("stroke-dasharray", ("2, 2")) // makes line dashed
       .attr("d", valueline);
+
+  // Add the valueline path (2). It draws after and places on top of the area.
+  svg.append("path")
+      .data([data])
+      .attr("class", "line")
+      .style("stroke", "green")
+      .attr("d", valueline2);
 
   // Add the X Axis
   svg.append("g")
