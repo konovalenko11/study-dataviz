@@ -38,6 +38,14 @@
     stroke-width: 0;
 }
 
+.axisSteelBlue text { 
+  fill: steelblue;
+}
+
+.axisRed text { 
+  fill: red;
+}
+
 </style>
 <body>
 
@@ -57,24 +65,25 @@ var parseTime = d3.timeParse("%d-%b-%y");
 
 // set the ranges
 var x = d3.scaleTime().range([0, width]);
-var y = d3.scaleLinear().range([height, 0]);
+var y0 = d3.scaleLinear().range([height, 0]);
+var y1 = d3.scaleLinear().range([height, 0]);
 
 // define the area
 var area = d3.area()
     .x(function(d) { return x(d.date); })
     .y0(height) // constant area
     // .y0(function(d) { return y(d.close-50); }) // fill the 50px area
-    .y1(function(d) { return y(d.close); });
+    .y1(function(d) { return y0(d.close); });
 
 // define the line (1)
 var valueline = d3.line()
     .x(function(d) { return x(d.date); })
-    .y(function(d) { return y(d.close); });
+    .y(function(d) { return y0(d.close); });
 
 // define the line (2)
 var valueline2 = d3.line()
     .x(function(d) { return x(d.date); })
-    .y(function(d) { return y(d.open); });
+    .y(function(d) { return y1(d.open); });
 
 // append the svg obgect to the body of the page
 // appends a 'group' element to 'svg'
@@ -95,7 +104,7 @@ function make_x_gridlines() {
 
 // gridlines in y axis function
 function make_y_gridlines() { 
-  return d3.axisLeft(y)
+  return d3.axisLeft(y0)
     .ticks(10)
 };
 
@@ -112,7 +121,8 @@ d3.csv("../data/data4.csv", function(error, data) {
 
   // Scale the range of the data
   x.domain(d3.extent(data, function(d) { return d.date; }));
-  y.domain([0, d3.max(data, function(d) { return Math.max(d.close, d.open); })]);
+  y0.domain([0, d3.max(data, function(d) { return Math.max(d.close); })]);
+  y1.domain([0, d3.max(data, function(d) { return Math.max(d.open); })]);
   // y.domain(d3.extent(data, function(d) { return d.close; }));
 
   // add the X gridlines
@@ -154,7 +164,7 @@ d3.csv("../data/data4.csv", function(error, data) {
 
   // Line text [1]
   svg.append("text")
-      .attr("transform", "translate("+(width+5)+","+y(data[0].close)+")")
+      .attr("transform", "translate("+(width+5)+","+y0(data[0].close)+")")
       .attr("dy", ".35em")
       .attr("text-anchor", "start")
       .style("fill", "blue")
@@ -162,7 +172,7 @@ d3.csv("../data/data4.csv", function(error, data) {
 
   // Line text [2]
   svg.append("text")
-      .attr("transform", "translate("+(width+3)+","+y(data[0].open)+")")
+      .attr("transform", "translate("+(width+3)+","+y1(data[0].open)+")")
       .attr("dy", ".35em")
       .attr("text-anchor", "start")
       .style("fill", "red")
@@ -218,10 +228,16 @@ d3.csv("../data/data4.csv", function(error, data) {
       .attr("class", "text")
       .text("Date")
 
-  // Add the Y Axis
+  // Add the Y0 Axis
   svg.append("g")
-      .attr("class", "axis")
-      .call(d3.axisLeft(y));
+      .attr("class", "axisSteelBlue")
+      .call(d3.axisLeft(y0));
+
+  // Add the Y1 Axis
+  svg.append("g")
+      .attr("class", "axisRed")
+      .attr("transform", "translate( " + width + ", 0 )")
+      .call(d3.axisRight(y1));
 
   svg.append("text")
     .attr("transform", "rotate(-90)")
@@ -238,7 +254,7 @@ d3.csv("../data/data4.csv", function(error, data) {
     .enter().append("circle")
       .attr("r", 3)
       .attr("cx", function(d) { return x(d.date); }) 
-      .attr("cy", function(d) { return y(d.close); });
+      .attr("cy", function(d) { return y0(d.close); });
 
 });
 
