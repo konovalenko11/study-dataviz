@@ -1,5 +1,22 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
+<style> /* set the CSS */
+
+.grid line {
+    stroke: lightgrey; 
+    stroke-opacity: 0.7; 
+    shape-rendering: crispEdges;
+}
+
+.grid path { 
+    stroke-width: 0;
+}
+
+.grid text { 
+    font: normal 15px verdana;
+}
+
+</style>
 
 <body>
 <h1>This is the CIRCLE code!</h1>
@@ -9,37 +26,69 @@
 
 // SVG dimensions
 var svg_margins = {"top": 10, "bottom": 10, "left": 10, "right": 10};
-var svg_size = {"width": 500, "height": 300};
+var svg_size = {"width": 500, "height": 500};
+
+const xticks = 10;
+const yticks = 10;
+
+const xtickStep = svg_size.width / xticks;
+const ytickStep = svg_size.height / yticks;
 
 // Adding the SVG object to body.
 var holder = d3.select("body")
 	.append("svg")
 	.attr("width", svg_size.width)
-	.attr("height", svg_size.height);
+	.attr("height", svg_size.height)
+;
 
 // Scaling axes.
-var x = d3.scaleLinear().range([0, svg_size.width]);
-var y = d3.scaleLinear().range([svg_size.height, 0]);
+var x = d3.scaleLinear().range([svg_margins.left, svg_size.width - svg_margins.right]);
+var y = d3.scaleLinear().range([svg_margins.bottom, svg_size.height - svg_margins.top]);
+// var y = d3.scaleLinear().range([svg_size.height - svg_margins.top, svg_margins.bottom]);
 
 x.domain([0, svg_size.width]);
 y.domain([0, svg_size.height]);
 
-// Adding X ticks
+// Adding X axis
 holder.append("g")
+    .attr("class", "grid")
+    // .attr("transform", "translate(0, " + (svg_size.height - svg_margins.bottom) + ")")
 	.call(
 		d3.axisBottom(x)
 			.ticks(10)
 			.tickSize(svg_size.height)
+			.tickValues(d3.range(xtickStep, svg_size.width, xtickStep))
 	);
 
-
-
-// Adding Y ticks
+// Adding X ticks
 holder.append("g")
+    .attr("class", "grid")
+    // .attr("transform", "translate(0, " + (svg_size.height - svg_margins.bottom) + ")")
+	.call(
+		d3.axisBottom(x)
+			.ticks(10)
+			.tickSize(0)
+			.tickValues(d3.range(xtickStep, svg_size.width, xtickStep))
+	);
+
+// Adding Y axis
+holder.append("g")
+    .attr("class", "grid")
 	.call(
 		d3.axisRight(y)
 			.ticks(10)
-			.tickSize(svg_size.width - 50)
+			.tickSize(svg_size.width)
+			.tickValues(d3.range(ytickStep, svg_size.height, ytickStep))
+	);
+
+// Adding Y ticks
+holder.append("g")
+    .attr("class", "grid")
+	.call(
+		d3.axisRight(y)
+			.ticks(10)
+			.tickSize(0)
+			.tickValues(d3.range(ytickStep, svg_size.height, ytickStep))
 	);
 
 // Adding circle to SVG
