@@ -19,7 +19,7 @@
 </style>
 
 <body>
-<h1>This is the CIRCLE code!</h1>
+<h1>This is the POLYGON code!</h1>
 
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script type="text/javascript">
@@ -42,8 +42,8 @@ var holder = d3.select("body")
 ;
 
 // Scaling axes.
-var x = d3.scaleLinear().range([svg_margins.left, svg_size.width - svg_margins.right]);
-var y = d3.scaleLinear().range([svg_margins.bottom, svg_size.height - svg_margins.top]);
+var x = d3.scaleLinear().range([/*svg_margins.left*/0, svg_size.width /*- svg_margins.right*/]);
+var y = d3.scaleLinear().range([/*svg_margins.bottom*/0, svg_size.height /*- svg_margins.top*/]);
 
 x.domain([0, svg_size.width]);
 y.domain([0, svg_size.height]);
@@ -90,11 +90,12 @@ holder.append("g")
 			.tickValues(d3.range(ytickStep, svg_size.height, ytickStep))
 	);
 
-// Adding circle to SVG
-holder.append("circle")
-	.attr("cx", svg_size.width / 2)
-	.attr("cy", svg_size.height / 2)
-	.attr("r", 50);
+// Adding a polygon
+holder.append("polygon")
+	.style("stroke", "blue")				// line color. Default: transparent
+	.style("fill", "none")					// Removing fill. By default: black
+	.attr("points", "100,250, 200,350, 350,200")
+;
 
 </script>
 </body>

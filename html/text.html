@@ -19,7 +19,7 @@
 </style>
 
 <body>
-<h1>This is the CIRCLE code!</h1>
+<h1>This is the TEXT code!</h1>
 
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script type="text/javascript">
@@ -42,8 +42,8 @@ var holder = d3.select("body")
 ;
 
 // Scaling axes.
-var x = d3.scaleLinear().range([svg_margins.left, svg_size.width - svg_margins.right]);
-var y = d3.scaleLinear().range([svg_margins.bottom, svg_size.height - svg_margins.top]);
+var x = d3.scaleLinear().range([/*svg_margins.left*/0, svg_size.width /*- svg_margins.right*/]);
+var y = d3.scaleLinear().range([/*svg_margins.bottom*/0, svg_size.height /*- svg_margins.top*/]);
 
 x.domain([0, svg_size.width]);
 y.domain([0, svg_size.height]);
@@ -90,11 +90,85 @@ holder.append("g")
 			.tickValues(d3.range(ytickStep, svg_size.height, ytickStep))
 	);
 
-// Adding circle to SVG
-holder.append("circle")
-	.attr("cx", svg_size.width / 2)
-	.attr("cy", svg_size.height / 2)
-	.attr("r", 50);
+// define the text 1
+holder.append("text") // define a text
+ 	.style("fill", "black")  // shape it as an ellipse
+
+ 	// Start point
+	.attr("x", 100)
+	.attr("y", 100)
+
+	// text Anchor
+	.attr("text-anchor", "start") // set anchor y justification
+	// .attr("text-anchor", "middle") // set anchor y justification
+	// .attr("text-anchor", "end") // set anchor y justification
+
+	// Offset 
+	.attr("dx", "10px")
+	.attr("dy", ".35em")
+
+	// Text itself
+	.text("Text 1...")
+;
+
+// HW [Normal]
+holder.append("text") // define a text
+ 	.style("fill", "black")  // shape it as an ellipse
+
+ 	// Start point
+	.attr("x", 200)
+	.attr("y", 200)
+
+	// Text itself
+	.text("Hello World")
+;
+
+// HW [Length]
+holder.append("text") // define a text
+ 	.style("fill", "black")  // shape it as an ellipse
+
+ 	// Start point
+	.attr("x", 200)
+	.attr("y", 250)
+
+	// Text length
+	.attr("textLength", 200)
+
+	// Text itself
+	.text("Hello World")
+;
+
+// HW [Adjusted Length Spacing]
+holder.append("text") // define a text
+ 	.style("fill", "black")  // shape it as an ellipse
+
+ 	// Start point
+	.attr("x", 200)
+	.attr("y", 250)
+
+	// Text length
+	.attr("textLength", 200)
+	.attr("lengthAdjust", "spacing") // adjusting the length using spaces
+
+	// Text itself
+	.text("Hello World")
+;
+
+// HW [Adjusted Length All]
+holder.append("text") // define a text
+ 	.style("fill", "black")  // shape it as an ellipse
+
+ 	// Start point
+	.attr("x", 200)
+	.attr("y", 300)
+
+	// Text length
+	.attr("textLength", 200)
+	.attr("lengthAdjust", "spacingAndGlyphs") // adjusting the length using spaces and glyphs
+
+	// Text itself
+	.text("Hello World")
+;
 
 </script>
 </body>

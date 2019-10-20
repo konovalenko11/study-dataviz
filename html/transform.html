@@ -19,7 +19,7 @@
 </style>
 
 <body>
-<h1>This is the CIRCLE code!</h1>
+<h1>This is the TRANSLATE code!</h1>
 
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script type="text/javascript">
@@ -42,8 +42,8 @@ var holder = d3.select("body")
 ;
 
 // Scaling axes.
-var x = d3.scaleLinear().range([svg_margins.left, svg_size.width - svg_margins.right]);
-var y = d3.scaleLinear().range([svg_margins.bottom, svg_size.height - svg_margins.top]);
+var x = d3.scaleLinear().range([/*svg_margins.left*/0, svg_size.width /*- svg_margins.right*/]);
+var y = d3.scaleLinear().range([/*svg_margins.bottom*/0, svg_size.height /*- svg_margins.top*/]);
 
 x.domain([0, svg_size.width]);
 y.domain([0, svg_size.height]);
@@ -90,11 +90,60 @@ holder.append("g")
 			.tickValues(d3.range(ytickStep, svg_size.height, ytickStep))
 	);
 
-// Adding circle to SVG
+// define the circle
 holder.append("circle")
-	.attr("cx", svg_size.width / 2)
-	.attr("cy", svg_size.height / 2)
-	.attr("r", 50);
+ 	.style("fill", "black")
+ 	// .attr("transform", "scale(2) translate(100,100)")
+ 	.attr("transform", "translate(100,100) scale(2)")
+ 	// .attr("transform", "translate(100, 100)")
+ 	// .attr("transform", "scale(2)")
+	.attr("cx", 150)
+	.attr("cy", 100)
+	.attr("r", 50)
+;
+
+holder.append("text")
+	.style("fill", "black")
+	.attr("x", 200)
+	.attr("y", 100)
+	.attr("dy", ".35em")
+	.attr("text-anchor", "start") 	// set anchor y justification 
+	.text("Hello World")
+;
+
+// In this example rotation goes around x, y coordinates around 0,0.
+holder.append("text")
+	.style("fill", "black")
+	.attr("x", 200)
+	.attr("y", 100)
+	.attr("dy", ".35em")
+	.attr("text-anchor", "start") 	// set anchor y justification 
+	.attr("transform", "rotate(10)") // rotate by 10 degrees
+	.text("Hello World (Rotated)")
+;
+
+// In this example rotation goes around the (200, 100) point.
+holder.append("text")
+	.style("fill", "black")
+	// .attr("x", 200)
+	// .attr("y", 100)
+	.attr("dy", ".35em")
+	.attr("text-anchor", "start") 	// set anchor y justification 
+	.attr("transform", "translate(200, 100) rotate(10)") // rotate by 10 degrees
+	.text("Hello World (Rotated 2)")
+;
+
+
+// In this example rotation goes around the (200, 100) point. All trnsform methods used.
+holder.append("text")
+	.style("fill", "black")
+	// .attr("x", 200)
+	// .attr("y", 100)
+	.attr("dy", ".35em")
+	.attr("text-anchor", "start") 	// set anchor y justification 
+	.attr("transform", "translate(200, 100) rotate(10) scale(2)") // rotate by 10 degrees
+	.text("Hello World (Rotated 2)")
+;
 
 </script>
 </body>
