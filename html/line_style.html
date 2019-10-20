@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style> /* set the CSS */
+
+.grid line {
+    stroke: lightgrey; 
+    stroke-opacity: 0.7; 
+    shape-rendering: crispEdges;
+}
+
+.grid path { 
+    stroke-width: 0;
+}
+
+.grid text { 
+    font: normal 15px verdana;
+}
+
+line.linecap {
+	stroke: brown;
+	stroke-width: 20; 
+}
+
+</style>
+
+<body>
+<h1>This is the LINE STYLE code!</h1>
+
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script type="text/javascript">
+
+// SVG dimensions
+var svg_margins = {"top": 10, "bottom": 10, "left": 10, "right": 10};
+var svg_size = {"width": 500, "height": 500};
+
+const xticks = 10;
+const yticks = 10;
+
+const xtickStep = svg_size.width / xticks;
+const ytickStep = svg_size.height / yticks;
+
+// Adding the SVG object to body.
+var holder = d3.select("body")
+	.append("svg")
+	.attr("width", svg_size.width)
+	.attr("height", svg_size.height)
+;
+
+// Scaling axes.
+var x = d3.scaleLinear().range([/*svg_margins.left*/0, svg_size.width /*- svg_margins.right*/]);
+var y = d3.scaleLinear().range([/*svg_margins.bottom*/0, svg_size.height /*- svg_margins.top*/]);
+
+x.domain([0, svg_size.width]);
+y.domain([0, svg_size.height]);
+
+// Adding X axis
+holder.append("g")
+    .attr("class", "grid")
+    // .attr("transform", "translate(0, " + (svg_size.height - svg_margins.bottom) + ")")
+	.call(
+		d3.axisBottom(x)
+			.ticks(10)
+			.tickSize(svg_size.height)
+			.tickValues(d3.range(xtickStep, svg_size.width, xtickStep))
+	);
+
+// Adding X ticks
+holder.append("g")
+    .attr("class", "grid")
+    // .attr("transform", "translate(0, " + (svg_size.height - svg_margins.bottom) + ")")
+	.call(
+		d3.axisBottom(x)
+			.ticks(10)
+			.tickSize(0)
+			.tickValues(d3.range(xtickStep, svg_size.width, xtickStep))
+	);
+
+// Adding Y axis
+holder.append("g")
+    .attr("class", "grid")
+	.call(
+		d3.axisRight(y)
+			.ticks(10)
+			.tickSize(svg_size.width)
+			.tickValues(d3.range(ytickStep, svg_size.height, ytickStep))
+	);
+
+// Adding Y ticks
+holder.append("g")
+    .attr("class", "grid")
+	.call(
+		d3.axisRight(y)
+			.ticks(10)
+			.tickSize(0)
+			.tickValues(d3.range(ytickStep, svg_size.height, ytickStep))
+	);
+
+// Adding a line
+holder.append("line")
+	.style("stroke", "red")					// line color. Default: transparent
+	.style("stroke-width", 20)
+	.attr("x1", 150)						// position of the x1
+	.attr("y1", 100) 						// position of the y1
+	.attr("x2", 400) 						// position of the x2
+	.attr("y2", 100);						// position of the y2
+
+// Adding a line with ending [BUTT]
+holder.append("line")
+	.style("stroke", "green")				// line color. Default: transparent
+	.style("stroke-width", 20)
+	.style("stroke-linecap", "butt")
+	.attr("x1", 150)						// position of the x1
+	.attr("y1", 150) 						// position of the y1
+	.attr("x2", 400) 						// position of the x2
+	.attr("y2", 150)						// position of the y2
+;
+
+// Adding a line with ending [ROUND]
+holder.append("line")
+	.style("stroke", "green")				// line color. Default: transparent
+	.style("stroke-width", 20)
+	.style("stroke-linecap", "round")
+	.attr("x1", 150)						// position of the x1
+	.attr("y1", 200) 						// position of the y1
+	.attr("x2", 400) 						// position of the x2
+	.attr("y2", 200)						// position of the y2
+;
+
+// Adding a line with ending [SQUARE]
+holder.append("line")
+	.style("stroke", "green")				// line color. Default: transparent
+	.style("stroke-width", 20)
+	.style("stroke-linecap", "square")
+	.attr("x1", 150)						// position of the x1
+	.attr("y1", 250) 						// position of the y1
+	.attr("x2", 400) 						// position of the x2
+	.attr("y2", 250)						// position of the y2
+;
+
+// Line Join: Round
+holder.append("polyline")
+	.style("stroke", "blue")				// line color. Default: transparent
+	.style("stroke-width", 15)
+	.style("stroke-linejoin", "round")
+	.style("fill", "none")
+	.attr("points", "100,300, 150,350, 200,300")
+;
+
+// Line Join: Bevel
+holder.append("polyline")
+	.style("stroke", "blue")				// line color. Default: transparent
+	.style("stroke-width", 15)
+	.style("stroke-linejoin", "bevel")
+	.style("fill", "none")
+	.attr("points", "100,350, 150,400, 200,350")
+;
+
+// Line Join: Miter
+holder.append("polyline")
+	.style("stroke", "blue")				// line color. Default: transparent
+	.style("stroke-width", 15)
+	.style("stroke-linejoin", "miter")
+	.style("fill", "none")
+	.attr("points", "100,400, 150,450, 200,400")
+;
+
+// Using CSS
+holder.append("line")
+	.attr("class", "linecap")				// line color. Default: transparent
+	.style("stroke-linecap", "round")
+	.attr("x1", 250)						// position of the x1
+	.attr("y1", 300) 						// position of the y1
+	.attr("x2", 400) 						// position of the x2
+	.attr("y2", 300)						// position of the y2
+;
+
+</script>
+</body>

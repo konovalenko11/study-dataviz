@@ -170,5 +170,37 @@ holder.append("text") // define a text
 	.text("Hello World")
 ;
 
+// Tob - Bottom text
+holder.append("text") // define a text
+ 	.style("fill", "black")  // shape it as an ellipse
+
+ 	// Start point
+	.attr("x", 100)
+	.attr("y", 200)
+
+	// Top - Bottom text orientation
+	.style("writing-mode", "tb")
+
+	// Text itself
+	.text("Hello World")
+;
+
+// Tob - Bottom text rotated
+holder.append("text") // define a text
+ 	.style("fill", "black")  // shape it as an ellipse
+
+ 	// Start point
+	.attr("x", 150)
+	.attr("y", 200)
+
+	// Top - Bottom text orientation
+	.style("writing-mode", "vertical-lr")
+	.style("text-orientation", "upright")
+
+
+	// Text itself
+	.text("Hello World")
+;
+
 </script>
 </body>

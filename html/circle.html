@@ -94,7 +94,25 @@ holder.append("g")
 holder.append("circle")
 	.attr("cx", svg_size.width / 2)
 	.attr("cy", svg_size.height / 2)
-	.attr("r", 50);
+	.attr("r", 100)
+	// .attr("transform", "translate(250, 250) scale(2)")
+
+	// Style options
+	// .style("fill", "green")	// text
+	// .style("fill", "rgb(0, 255, 0)")	// RGB
+	.style("fill", "#ba7364")	// Hex
+
+	.style("stroke", "red")
+	.style("stroke-width", "8px")
+
+	// .style("opacity", .1)
+	.style("stroke-opacity", 0.5)
+	.style("fill-opacity", .2)
+
+	.style("stroke-dasharray", "4 10 10")
+
+
+;
 
 </script>
 </body>
