@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style> /* set the CSS */
+
+.line {
+  fill: none;
+  stroke: blue;
+  stroke-width: 2px;
+}
+
+</style>
+<body>
+
+<h1>Parsing columns!</h1>
+
+<!-- load the d3.js library -->    	
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script>
+
+// Fuction to get random color from color map.
+function randomColor() {
+  return colorRange[Math.floor(Math.random() * colorRange.length)]
+}
+
+// set the dimensions and margins of the graph
+var margin = {top: 20, right: 30, bottom: 30, left: 40},
+    width = 800 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+// append the svg obgect to the body of the page
+// appends a 'group' element to 'svg'
+// moves the 'group' element to the top left margin
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  // .append("g")
+  //   .attr("transform",
+  //         "translate(" + margin.left + "," + margin.top + ")")
+;
+
+// Define colormap.
+var colorRange = ['green', 'orange', 'red', 'blue'];
+var rectSize = 20;
+
+var svg_width = +svg.style("width").substr(0, svg.style("width").length-2);
+var svg_height = +svg.style("height").substr(0, svg.style("height").length-2);
+console.log("Width: " + svg_width);
+console.log("height: " + svg_height);
+
+// Creating rectangles.
+var x, y;
+for (y = 0; y < svg_height;) {
+  for (x = 0; x < svg_width;) {
+    // console.log("Point[" + x + ", " + y + "]");
+
+    svg.append('rect')
+      .attr("x", x)
+      .attr("y", y)
+      .attr("width", rectSize)
+      .attr("height", rectSize)
+      .attr("fill", randomColor)
+    ;
+
+    x = x + rectSize;
+  }
+  y = y + rectSize
+}
+
+//button to changhe rectangle colors.
+d3.select("body").append("button")
+    .text("change colors")
+    .on("click",function(){
+
+      console.log("Colors changed.");
+      d3.selectAll('rect').attr("fill", randomColor);
+
+    });//end click function
+
+
+</script>
+</body>
