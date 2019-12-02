@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style> /* set the CSS */
+
+.bar {
+  fill: steelblue; 
+}
+
+</style>
+<body>
+
+<h1>Bar chart!</h1>
+
+<!-- load the d3.js library -->    	
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script>
+
+// set the dimensions and margins of the graph
+var margin = {top: 20, right: 20, bottom: 30, left: 40},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+// set the ranges.
+var x = d3.scaleBand()
+  .range([0, width])
+  // .padding(0.1)
+  .paddingInner(0.1)
+  .paddingOuter(0.5)
+; 
+
+var y = d3.scaleLinear()
+  .range([height, 0]);
+
+// Adding SVG.
+var svg = d3.select("body").append("svg")
+  .attr("width", width + margin.left + margin.right) 
+  .attr("height", height + margin.top + margin.bottom)
+  // Group inside svg.
+  .append("g") 
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+
+// get the data
+d3.csv("../data/sales.csv", function(error, data) { if (error) throw error;
+  // format the data
+  data.forEach(function(d) { d.sales = +d.sales; });
+
+  // Scale the range of the data in the domains.
+  // Map function needed for X axes to create array of values.
+  x.domain(data.map(function(d) { return d.salesperson; })); 
+  // For Y axes we're finding the MAX Y value.
+  y.domain([0, d3.max(data, function(d) { return d.sales; })]);
+
+  // Map function needed to create array of values.
+  console.log("X1: " + data.map(function(d) { return d.salesperson; }));
+  console.log("X2: " + x('Bob'));
+  console.log("X3: " + x('Robin'));
+  console.log("X4: " + x('Anne'));
+  console.log("Y max: " + d3.max(data, function(d) { return d.sales; }));
+
+  // append the rectangles for the bar chart
+  svg.selectAll(".bar") 
+    .data(data)
+    .enter().append("rect")
+      .attr("class", "bar")
+      .attr("x", function(d) { return x(d.salesperson); }) 
+      .attr("width", x.bandwidth())
+      .attr("y", function(d) { return y(d.sales); }) 
+      .attr("height", function(d) { return height - y(d.sales); })
+  ;
+
+  console.log("X width: " + x.bandwidth());
+  console.log("height: " + height);
+  console.log("Y1: " + y(33));
+  console.log("Y2: " + y(12));
+  console.log("Y3: " + y(41));
+
+  // add the x Axis
+  svg.append("g")
+    .attr("transform", "translate(0," + height + ")") 
+    .call(d3.axisBottom(x));
+  
+  // add the y Axis
+  svg.append("g") 
+    .call(d3.axisLeft(y));
+
+});
+
+</script>
+</body>
