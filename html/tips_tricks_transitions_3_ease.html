@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style> /* set the CSS */
+
+</style>
+<body>
+
+<h1>Tips and Tricks - Transitions 3 (Ease)!</h1>
+
+<!-- load the d3.js library -->     
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script>
+
+// set the dimensions and margins of the graph
+var margin = {top: 20, right: 20, bottom: 30, left: 50},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+// append the svg obgect to the body of the page
+var svg = d3.select("body") // Select the body element
+  .append("svg") // Append an SVG element to the body
+  .attr("width", 960) // make it 960 pixels wide
+  .attr("height", 500) // make it 500 pixels high
+  .append("circle") // append a cicle to the svg
+    .attr("fill", "blue") // fill the circle with 'blue'
+    .attr("r", 20) // set the radius to 20 pixels
+    .attr('cx', 40) // position the circle at 40 on the x axis
+    .attr('cy', 250) // position the circle at 250 on the y axis
+    // Transition 1
+    .transition() // apply transition
+      .duration(4000)  // position the circle at 250 on the y axis
+      .ease(d3.easeBounceOut) // transition speed function [https://observablehq.com/@d3/easing-animations].
+      .attr('cx', 900) // new horizontal position at 920 on x axis
+      .attr('fill', "green")
+      .attr('r', 50)
+
+;
+</script>
+</body>
